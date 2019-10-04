@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -59,13 +60,21 @@ public class Iterative_Drive_Mode extends OpMode
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
     private boolean isPov = true;
+    static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final int    CYCLE_MS    =   50;     // period of each cycle
+    static final double MAX_POS     =  1.0;     // Maximum rotational position
+    static final double MIN_POS     =  0.0;     // Minimum rotational position
+
+    // Define class members
+    Servo servo;
+    
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Status", "Initialized cadet");
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -74,6 +83,7 @@ public class Iterative_Drive_Mode extends OpMode
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        servo = hardwareMap.get(Servo.class, "left_hand");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -142,6 +152,14 @@ public class Iterative_Drive_Mode extends OpMode
         frontRightDrive.setPower(rightPower);
         backLeftDrive.setPower(leftPower);
         backRightDrive.setPower(rightPower);
+
+        if (gamepad2.a){
+            servo.setPosition(0);
+        }
+        if (gamepad2.b){
+            servo.setPosition(0.5);
+        }
+
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
