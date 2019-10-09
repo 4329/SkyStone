@@ -55,19 +55,12 @@ public class Iterative_Drive_Mode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor frontLeftDrive = null;
-    private DcMotor frontRightDrive = null;
-    private DcMotor backLeftDrive = null;
-    private DcMotor backRightDrive = null;
     private boolean isPov = true;
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   50;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
-
-    // Define class members
-    Servo servo;
-    
+    private SkystoneHardwareMap david = new SkystoneHardwareMap();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -76,21 +69,7 @@ public class Iterative_Drive_Mode extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized cadet");
 
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
-        servo = hardwareMap.get(Servo.class, "left_hand");
-
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        david.init(hardwareMap);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -135,29 +114,29 @@ public class Iterative_Drive_Mode extends OpMode
         if (isPov) {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = gamepad1.left_stick_y;
-            double turn = -gamepad1.right_stick_x;
+            double drive = -gamepad1.left_stick_y;
+            double turn = gamepad1.right_stick_x;
             leftPower = Range.clip(drive + turn, -1.0, 1.0);
             rightPower = Range.clip(drive - turn, -1.0, 1.0);
         }
         else {
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            leftPower = gamepad1.left_stick_y;
-            rightPower = gamepad1.right_stick_y;
+            leftPower = -gamepad1.left_stick_y;
+            rightPower = -gamepad1.right_stick_y;
         }
 
         // Send calculated power to wheels
-        frontLeftDrive.setPower(leftPower);
-        frontRightDrive.setPower(rightPower);
-        backLeftDrive.setPower(leftPower);
-        backRightDrive.setPower(rightPower);
+        david.frontLeftDrive.setPower(leftPower);
+        david.frontRightDrive.setPower(rightPower);
+        david.backLeftDrive.setPower(leftPower);
+        david.backRightDrive.setPower(rightPower);
 
         if (gamepad2.a){
-            servo.setPosition(0);
+            david.servo.setPosition(0);
         }
         if (gamepad2.b){
-            servo.setPosition(0.5);
+            david.servo.setPosition(0.5);
         }
 
 
