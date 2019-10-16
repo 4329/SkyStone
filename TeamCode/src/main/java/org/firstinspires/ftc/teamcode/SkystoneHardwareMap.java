@@ -11,6 +11,7 @@ public class SkystoneHardwareMap {
     public DcMotor frontRightDrive = null;
     public DcMotor backLeftDrive = null;
     public DcMotor backRightDrive = null;
+    public DcMotor foundationGrabber = null;
 
     public Servo servo;
 
@@ -23,6 +24,7 @@ public class SkystoneHardwareMap {
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        foundationGrabber = hardwareMap.get(DcMotor.class, "foundation_grabber");
         servo = hardwareMap.get(Servo.class, "left_hand");
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -31,6 +33,7 @@ public class SkystoneHardwareMap {
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        foundationGrabber.setDirection(DcMotor.Direction.FORWARD);
 
     }
 }

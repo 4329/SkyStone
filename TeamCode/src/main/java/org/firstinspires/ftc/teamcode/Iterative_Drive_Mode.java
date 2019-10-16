@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -42,25 +41,25 @@ import com.qualcomm.robotcore.util.Range;
  * The names of OpModes appear on the menu of the FTC Driver Station.
  * When an selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
- *
+ * <p>
  * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
  * It includes all the skeletal structure that all iterative OpModes contain.
- *
+ * <p>
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
-public class Iterative_Drive_Mode extends OpMode
-{
+@TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
+public class Iterative_Drive_Mode extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isPov = true;
-    static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_POS     =  1.0;     // Maximum rotational position
-    static final double MIN_POS     =  0.0;     // Minimum rotational position
-    private SkystoneHardwareMap david = new SkystoneHardwareMap();
+    static final double INCREMENT = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final int CYCLE_MS = 50;     // period of each cycle
+    static final double MAX_POS = 1.0;     // Maximum rotational position
+    static final double MIN_POS = 0.0;     // Minimum rotational position
+    static final double     FOUNDATION_GRABBER_SPEED             = 0.6;
+    private SkystoneHardwareMap robot = new SkystoneHardwareMap();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -69,7 +68,7 @@ public class Iterative_Drive_Mode extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized cadet");
 
-        david.init(hardwareMap);
+        robot.init(hardwareMap);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -81,8 +80,8 @@ public class Iterative_Drive_Mode extends OpMode
     @Override
     public void init_loop() {
         if (gamepad1.start) {
-            isPov = ! isPov;
-            telemetry.addData("pov mode " , isPov);
+            isPov = !isPov;
+            telemetry.addData("pov mode ", isPov);
         }
     }
 
@@ -104,8 +103,8 @@ public class Iterative_Drive_Mode extends OpMode
         double rightPower;
 
         if (gamepad1.start) {
-            isPov = ! isPov;
-            telemetry.addData("pov mode " , isPov);
+            isPov = !isPov;
+            telemetry.addData("pov mode ", isPov);
         }
 
         // Choose to drive using either Tank Mode, or POV Mode
@@ -118,8 +117,7 @@ public class Iterative_Drive_Mode extends OpMode
             double turn = gamepad1.right_stick_x;
             leftPower = Range.clip(drive + turn, -1.0, 1.0);
             rightPower = Range.clip(drive - turn, -1.0, 1.0);
-        }
-        else {
+        } else {
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             leftPower = -gamepad1.left_stick_y;
@@ -127,18 +125,24 @@ public class Iterative_Drive_Mode extends OpMode
         }
 
         // Send calculated power to wheels
-        david.frontLeftDrive.setPower(leftPower);
-        david.frontRightDrive.setPower(rightPower);
-        david.backLeftDrive.setPower(leftPower);
-        david.backRightDrive.setPower(rightPower);
+        robot.frontLeftDrive.setPower(leftPower);
+        robot.frontRightDrive.setPower(rightPower);
+        robot.backLeftDrive.setPower(leftPower);
+        robot.backRightDrive.setPower(rightPower);
 
-        if (gamepad2.a){
-            david.servo.setPosition(0);
+        if (gamepad2.a) {
+            robot.servo.setPosition(0);
         }
-        if (gamepad2.b){
-            david.servo.setPosition(0.5);
+        if (gamepad2.b) {
+            robot.servo.setPosition(0.5);
         }
 
+        if (gamepad2.x) {
+            encoderGrabber(FOUNDATION_GRABBER_SPEED, 288, 5);
+        }
+        if (gamepad2.y) {
+            encoderGrabber(FOUNDATION_GRABBER_SPEED, -288, 5);
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -152,4 +156,55 @@ public class Iterative_Drive_Mode extends OpMode
     public void stop() {
     }
 
+
+    public void encoderGrabber(double speed,
+                             int encoderTicks,
+                             double timeoutS) {
+        int newLeftTarget;
+
+
+        // Determine new target position, and pass to motor controller
+        newLeftTarget = robot.foundationGrabber.getCurrentPosition() + (encoderTicks);
+        robot.foundationGrabber.setTargetPosition(newLeftTarget);
+
+        // Turn On RUN_TO_POSITION
+        robot.foundationGrabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // reset the timeout time and start motion.
+        runtime.reset();
+        robot.foundationGrabber.setPower(Math.abs(speed));
+
+        // keep looping while we are still active, and there is time left, and both motors are running.
+        // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+        // its target position, the motion will stop.  This is "safer" in the event that the robot will
+        // always end the motion as soon as possible.
+        // However, if you require that BOTH motors have finished their moves before the robot continues
+        // onto the next step, use (isBusy() || isBusy()) in the loop test.
+        while (
+                (runtime.seconds() < timeoutS) &&
+                (robot.foundationGrabber.isBusy())) {
+
+            // Display it for the driver.
+            telemetry.addData("Path1", "Running to %7d", newLeftTarget);
+            telemetry.addData("Path2", "Running at %7d",
+                    robot.foundationGrabber.getCurrentPosition());
+            telemetry.update();
+
+        }
+
+        // Stop all motion;
+        robot.foundationGrabber.setPower(0);
+
+        // Turn off RUN_TO_POSITION
+        robot.foundationGrabber.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //  sleep(250);   // optional pause after each move
+
+    }
+
+    public final void idle() {
+        // Otherwise, yield back our thread scheduling quantum and give other threads at
+        // our priority level a chance to run
+        Thread.yield();
+    }
 }
