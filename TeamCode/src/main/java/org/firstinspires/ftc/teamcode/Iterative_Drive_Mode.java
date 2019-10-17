@@ -51,6 +51,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
+    public static final int CORE_HEX_90_DEGREES = 65;
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isPov = true;
@@ -138,10 +139,10 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
         if (gamepad2.x) {
-            encoderGrabber(FOUNDATION_GRABBER_SPEED, 288, 5);
+            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);
         }
         if (gamepad2.y) {
-            encoderGrabber(FOUNDATION_GRABBER_SPEED, -288, 5);
+            encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
         }
 
         // Show the elapsed game time and wheel power.
