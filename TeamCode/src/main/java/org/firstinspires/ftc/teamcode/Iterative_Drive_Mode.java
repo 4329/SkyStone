@@ -52,6 +52,7 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
     public static final int CORE_HEX_90_DEGREES = 65;
+    public static final double ELEVATOR_POWER = 0.2;
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isPov = true;
@@ -145,9 +146,23 @@ public class Iterative_Drive_Mode extends OpMode {
             encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
         }
 
+
+        if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
+            robot.leftElevatorMotor.setPower(ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(ELEVATOR_POWER);
+        }
+        else if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() > 0) {
+            robot.leftElevatorMotor.setPower(-ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(-ELEVATOR_POWER);
+        }
+        else {
+            robot.leftElevatorMotor.setPower(0);
+            robot.rightElevatorMotor.setPower(0);
+        }
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Current elevator encoder position is %d", robot.leftElevatorMotor.getCurrentPosition());
     }
 
     /*
