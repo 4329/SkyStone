@@ -52,11 +52,12 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
     public static final int CORE_HEX_90_DEGREES = 65;
-    public static final double ELEVATOR_POWER = 0.45;
+    public static final double ELEVATOR_POWER = 0.7;
+
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isPov = true;
-    static final double INCREMENT = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final double INCREMENT = 0.01;     // amount to slew stoneGrabberServo each CYCLE_MS cycle
     static final int CYCLE_MS = 50;     // period of each cycle
     static final double MAX_POS = 1.0;     // Maximum rotational position
     static final double MIN_POS = 0.0;     // Minimum rotational position
@@ -133,18 +134,18 @@ public class Iterative_Drive_Mode extends OpMode {
         robot.backRightDrive.setPower(rightPower);
 
         if (gamepad2.a) {
-            robot.servo.setPosition(0);
+            robot.stoneGrabberServo.setPosition(0);
         }
         if (gamepad2.b) {
-            robot.servo.setPosition(0.5);
+            robot.stoneGrabberServo.setPosition(0.5);
         }
 
-        if (gamepad2.x) {
-            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);
-        }
-        if (gamepad2.y) {
-            encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
-        }
+//        if (gamepad2.x) {
+//            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);
+//        }
+//        if (gamepad2.y) {
+//            encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
+//        }
 
 
         if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
@@ -167,6 +168,16 @@ public class Iterative_Drive_Mode extends OpMode {
         else {
             robot.rightElevatorMotor.setPower(0);
         }
+
+        if (gamepad2.x) {
+            robot.leftFoundationGrabber.setPosition(0);
+            robot.rightFoundationGrabber.setPosition(0.75);
+        }
+        if (gamepad2.y) {
+            robot.leftFoundationGrabber.setPosition(0.75);
+            robot.rightFoundationGrabber.setPosition(0);
+        }
+
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
