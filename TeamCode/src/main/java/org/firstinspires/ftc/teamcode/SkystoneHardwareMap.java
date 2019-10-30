@@ -49,8 +49,8 @@ public class SkystoneHardwareMap {
         leftElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftFoundationGrabber.setPosition(0);
-        rightFoundationGrabber.setPosition(0.75);
+        leftFoundationGrabber.setPosition(0.81);
+        rightFoundationGrabber.setPosition(0);
 
     }
 }
