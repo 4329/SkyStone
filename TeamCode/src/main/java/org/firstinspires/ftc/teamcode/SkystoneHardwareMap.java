@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -16,6 +17,7 @@ public class SkystoneHardwareMap {
     public Servo stoneGrabberServo;
     public Servo leftFoundationGrabber;
     public Servo rightFoundationGrabber;
+    private RobotController robotController = new RobotController(this);
 
     public void init(HardwareMap hardwareMap) {
 
@@ -40,8 +42,8 @@ public class SkystoneHardwareMap {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
         foundationGrabber.setDirection(DcMotor.Direction.FORWARD);
-        leftElevatorMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightElevatorMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftElevatorMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightElevatorMotor.setDirection(DcMotor.Direction.REVERSE);
         leftElevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightElevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftElevatorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -49,8 +51,6 @@ public class SkystoneHardwareMap {
         leftElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftFoundationGrabber.setPosition(0.81);
-        rightFoundationGrabber.setPosition(0);
-
+        robotController.foundationGrabberUp();
     }
 }

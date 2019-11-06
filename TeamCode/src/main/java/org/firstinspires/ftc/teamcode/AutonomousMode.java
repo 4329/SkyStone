@@ -63,6 +63,7 @@ public class AutonomousMode extends LinearOpMode {
 
     /* Declare OpMode members. */
     private SkystoneHardwareMap robot = new SkystoneHardwareMap();
+    private RobotController robotController = new RobotController(robot);
     private ElapsedTime     runtime = new ElapsedTime();
 
 
@@ -103,6 +104,12 @@ public class AutonomousMode extends LinearOpMode {
 //        }
 
         encoderDrive(DRIVE_SPEED, 18, 18, 5);
+        robotController.foundationGrabberDown();
+        sleep(2000);
+        encoderDrive(DRIVE_SPEED, -30, -1, 5);
+        robotController.foundationGrabberUp();
+
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

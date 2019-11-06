@@ -63,6 +63,7 @@ public class Iterative_Drive_Mode extends OpMode {
     static final double MIN_POS = 0.0;     // Minimum rotational position
     static final double     FOUNDATION_GRABBER_SPEED             = 0.6;
     private SkystoneHardwareMap robot = new SkystoneHardwareMap();
+    private RobotController robotController = new RobotController(robot);
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -149,10 +150,10 @@ public class Iterative_Drive_Mode extends OpMode {
 
 
         if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
-            robot.leftElevatorMotor.setPower(-ELEVATOR_POWER);
+            robot.leftElevatorMotor.setPower(ELEVATOR_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > 8) {
-            robot.leftElevatorMotor.setPower(ELEVATOR_POWER);
+            robot.leftElevatorMotor.setPower(-ELEVATOR_POWER);
         }
         else {
             robot.leftElevatorMotor.setPower(0);
@@ -160,22 +161,20 @@ public class Iterative_Drive_Mode extends OpMode {
 
 
         if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
-            robot.rightElevatorMotor.setPower(-ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(ELEVATOR_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > 8) {
-            robot.rightElevatorMotor.setPower(ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(-ELEVATOR_POWER);
         }
         else {
             robot.rightElevatorMotor.setPower(0);
         }
 
         if (gamepad2.x) {
-            robot.rightFoundationGrabber.setPosition(0.8);
-            robot.leftFoundationGrabber.setPosition(0);
+            robotController.foundationGrabberDown();
         }
         if (gamepad2.y) {
-            robot.rightFoundationGrabber.setPosition(0);
-            robot.leftFoundationGrabber.setPosition(0.81);
+            robotController.foundationGrabberUp();
         }
 
         // Show the elapsed game time and wheel power.
