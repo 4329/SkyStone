@@ -10,13 +10,17 @@ public class RobotController {
     }
 
     public void foundationGrabberDown(){
-        robot.rightFoundationGrabber.setPosition(0.8);
-        robot.leftFoundationGrabber.setPosition(0);
+        robot.rightOutFoundationGrabber.setPosition(0.8);
+        robot.rightInFoundationGrabber.setPosition(0);
+        robot.leftOutFoundationGrabber.setPosition(0);
+        robot.leftInFoundationGrabber.setPosition(0.8);
 
     }
     public void foundationGrabberUp(){
-        robot.rightFoundationGrabber.setPosition(0);
-        robot.leftFoundationGrabber.setPosition(0.81);
+        robot.rightOutFoundationGrabber.setPosition(0);
+        robot.rightInFoundationGrabber.setPosition(0.8);
+        robot.leftInFoundationGrabber.setPosition(0);
+        robot.leftOutFoundationGrabber.setPosition(0.85);
 
     }
 

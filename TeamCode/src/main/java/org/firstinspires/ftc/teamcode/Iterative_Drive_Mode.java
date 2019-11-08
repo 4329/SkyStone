@@ -134,12 +134,12 @@ public class Iterative_Drive_Mode extends OpMode {
         robot.backLeftDrive.setPower(leftPower);
         robot.backRightDrive.setPower(rightPower);
 
-        if (gamepad2.a) {
-            robot.stoneGrabberServo.setPosition(0);
-        }
-        if (gamepad2.b) {
-            robot.stoneGrabberServo.setPosition(0.5);
-        }
+//        if (gamepad2.a) {
+//            robot.stoneGrabberServo.setPosition(0);
+//        }
+//        if (gamepad2.b) {
+//            robot.stoneGrabberServo.setPosition(0.5);
+//        }
 
 //        if (gamepad2.x) {
 //            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);

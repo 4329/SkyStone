@@ -105,8 +105,8 @@ public class AutonomousMode extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 18, 18, 5);
         robotController.foundationGrabberDown();
-        sleep(2000);
-        encoderDrive(DRIVE_SPEED, -30, -1, 5);
+        sleep(3000);
+        encoderDrive(DRIVE_SPEED, -9, 9, 5);
         robotController.foundationGrabberUp();
 
 
@@ -154,7 +154,7 @@ public class AutonomousMode extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.frontLeftDrive.isBusy() && robot.frontRightDrive.isBusy())) {
+                    (robot.frontLeftDrive.isBusy() || robot.frontRightDrive.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);

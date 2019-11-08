@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -15,8 +14,11 @@ public class SkystoneHardwareMap {
     public DcMotor rightElevatorMotor = null;
 
     public Servo stoneGrabberServo;
-    public Servo leftFoundationGrabber;
-    public Servo rightFoundationGrabber;
+    public Servo leftOutFoundationGrabber;
+    public Servo rightOutFoundationGrabber;
+    public Servo leftInFoundationGrabber;
+    public Servo rightInFoundationGrabber;
+
     private RobotController robotController = new RobotController(this);
 
     public void init(HardwareMap hardwareMap) {
@@ -29,11 +31,13 @@ public class SkystoneHardwareMap {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
         foundationGrabber = hardwareMap.get(DcMotor.class, "foundation_grabber");
-        stoneGrabberServo = hardwareMap.get(Servo.class, "stone_grabber");
+        //stoneGrabberServo = hardwareMap.get(Servo.class, "stone_grabber");
         leftElevatorMotor = hardwareMap.get(DcMotor.class, "left_elevator_motor");
         rightElevatorMotor = hardwareMap.get(DcMotor.class, "right_elevator_motor");
-        leftFoundationGrabber = hardwareMap.get(Servo.class, "left_foundation_grabber");
-        rightFoundationGrabber = hardwareMap.get(Servo.class, "right_foundation_grabber");
+        leftOutFoundationGrabber = hardwareMap.get(Servo.class, "left_out_foundation_grabber");
+        leftInFoundationGrabber = hardwareMap.get(Servo.class, "left_in_foundation_grabber");
+        rightOutFoundationGrabber = hardwareMap.get(Servo.class, "right_out_foundation_grabber");
+        rightInFoundationGrabber = hardwareMap.get(Servo.class, "right_in_foundation_grabber");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
