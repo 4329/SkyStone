@@ -71,10 +71,11 @@ public class AutonomousMode extends LinearOpMode {
     static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // Neverest 40 motor
     static final double     DRIVE_GEAR_REDUCTION    = 1.286 ;     // Gear ratio for tilerunner
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
-    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double     UNKNOWN_REDUCTION       = 3.0/5.0 ;
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION * UNKNOWN_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.8;
 
     @Override
     public void runOpMode() {
@@ -103,11 +104,19 @@ public class AutonomousMode extends LinearOpMode {
 //            telemetry.update();
 //        }
 
-        encoderDrive(DRIVE_SPEED, 18, 18, 5);
+        //encoderDrive(DRIVE_SPEED, 30, 30, 5);
+        //robotController.foundationGrabberDown();
+        //sleep(2000);
+        //encoderDrive(DRIVE_SPEED, -6, -6, 5);
+        //encoderDrive(TURN_SPEED, -15, 15, 5);
+        //robotController.foundationGrabberUp();
+
+        encoderDrive(DRIVE_SPEED, -2, -2, 2);
         robotController.foundationGrabberDown();
-        sleep(3000);
-        encoderDrive(DRIVE_SPEED, -9, 9, 5);
-        robotController.foundationGrabberUp();
+        sleep(2000);
+        encoderDrive(DRIVE_SPEED, 24, 24, 5);
+        //this is the final back up
+        encoderDrive(DRIVE_SPEED, -45, -45, 5);
 
 
 
