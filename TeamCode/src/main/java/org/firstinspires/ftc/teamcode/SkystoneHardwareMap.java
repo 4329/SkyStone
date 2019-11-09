@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,6 +13,7 @@ public class SkystoneHardwareMap {
     public DcMotor foundationGrabber = null;
     public DcMotor leftElevatorMotor = null;
     public DcMotor rightElevatorMotor = null;
+    public BNO055IMU imu;
 
     public Servo stoneGrabberServo;
     public Servo leftOutFoundationGrabber;
@@ -54,6 +56,16 @@ public class SkystoneHardwareMap {
         rightElevatorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //IMU parameters.
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
 
         robotController.foundationGrabberUp();
     }

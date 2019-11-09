@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -36,6 +37,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -58,8 +62,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-public class AutonomousMode extends LinearOpMode {
+
+public abstract class AutonomousMode extends LinearOpMode {
 
     /* Declare OpMode members. */
     private SkystoneHardwareMap robot = new SkystoneHardwareMap();
@@ -75,7 +79,7 @@ public class AutonomousMode extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION * UNKNOWN_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.8;
+    static final double     TURN_SPEED              = 1.0;
 
     @Override
     public void runOpMode() {
@@ -95,26 +99,19 @@ public class AutonomousMode extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 1 seconds
-//        robot.frontLeftDrive.setPower(FORWARD_SPEED);
-//        robot.frontRightDrive.setPower(FORWARD_SPEED);
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-//            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
 
-        //encoderDrive(DRIVE_SPEED, 30, 30, 5);
-        //robotController.foundationGrabberDown();
-        //sleep(2000);
-        //encoderDrive(DRIVE_SPEED, -6, -6, 5);
-        //encoderDrive(TURN_SPEED, -15, 15, 5);
-        //robotController.foundationGrabberUp();
+
+        encoderDrive(DRIVE_SPEED, 30, 30, 5);
+        robotController.foundationGrabberDown();
+        sleep(1000);
+        encoderDrive(DRIVE_SPEED, -16, -16, 5);
+        turnToAngle(90, 1);
+        robotController.foundationGrabberUp();
 
         encoderDrive(DRIVE_SPEED, -2, -2, 2);
-        robotController.foundationGrabberDown();
-        sleep(2000);
-        encoderDrive(DRIVE_SPEED, 24, 24, 5);
+        //robotController.foundationGrabberDown();
+        sleep(1000);
+        encoderDrive(.8, 10, 10, 4);
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -45, -45, 5);
 
@@ -190,5 +187,41 @@ public class AutonomousMode extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
+    private void turnToAngle(double v, double speed) {
+        int numloops = 0;
+        double powermultiplier = 1;
+        double TURNTOANGLE_SPEED = speed;
+
+        robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.frontRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        while (opModeIsActive() &&
+                robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < v - 5) {
+
+
+            telemetry.addData("Numloops", numloops);
+            telemetry.addData("Robot Turning", "Left");
+            telemetry.addData("imu angle", robot.imu.getPosition());
+            telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+            robot.frontLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
+            robot.backLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
+            robot.frontRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
+            robot.backRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
+            telemetry.update();
+            idle();
+        }
+        robot.frontLeftDrive.setPower(0);
+        robot.backLeftDrive.setPower(0);
+        robot.frontRightDrive.setPower(0);
+        robot.backRightDrive.setPower(0);
+
+        numloops = 0;
+    }
+
+
+        abstract int colorDirection();
 }
 
