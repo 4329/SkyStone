@@ -52,7 +52,8 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
     public static final int CORE_HEX_90_DEGREES = 65;
-    public static final double ELEVATOR_POWER = 0.85;
+    public static final double ELEVATOR_POWER = 0.425;
+    public static final double ELEVATOR_UP_POWER = 1;
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -134,12 +135,12 @@ public class Iterative_Drive_Mode extends OpMode {
         robot.backLeftDrive.setPower(leftPower);
         robot.backRightDrive.setPower(rightPower);
 
-//        if (gamepad2.a) {
-//            robot.stoneGrabberServo.setPosition(0);
-//        }
-//        if (gamepad2.b) {
-//            robot.stoneGrabberServo.setPosition(0.5);
-//        }
+       if (gamepad2.a) {
+            robot.stoneGrabberServo.setPosition(0);
+        }
+        if (gamepad2.b) {
+            robot.stoneGrabberServo.setPosition(0.5);
+        }
 
 //        if (gamepad2.x) {
 //            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);
@@ -148,11 +149,11 @@ public class Iterative_Drive_Mode extends OpMode {
 //            encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
 //        }
 
-
-        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
-            robot.leftElevatorMotor.setPower(ELEVATOR_POWER);
+    // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!
+        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 17) {
+            robot.leftElevatorMotor.setPower(ELEVATOR_UP_POWER);
         }
-        else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > 8) {
+        else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > 8) {//prevent going under zero
             robot.leftElevatorMotor.setPower(-ELEVATOR_POWER);
         }
         else {
@@ -160,8 +161,8 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
 
-        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 8) {
-            robot.rightElevatorMotor.setPower(ELEVATOR_POWER);
+        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 17) {
+            robot.rightElevatorMotor.setPower(ELEVATOR_UP_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > 8) {
             robot.rightElevatorMotor.setPower(-ELEVATOR_POWER);

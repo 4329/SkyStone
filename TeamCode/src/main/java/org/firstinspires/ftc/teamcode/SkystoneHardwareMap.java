@@ -33,7 +33,7 @@ public class SkystoneHardwareMap {
         backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
         backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
         foundationGrabber = hardwareMap.get(DcMotor.class, "foundation_grabber");
-        //stoneGrabberServo = hardwareMap.get(Servo.class, "stone_grabber");
+        stoneGrabberServo = hardwareMap.get(Servo.class, "stone_grabber");
         leftElevatorMotor = hardwareMap.get(DcMotor.class, "left_elevator_motor");
         rightElevatorMotor = hardwareMap.get(DcMotor.class, "right_elevator_motor");
         leftOutFoundationGrabber = hardwareMap.get(Servo.class, "left_out_foundation_grabber");
@@ -49,7 +49,7 @@ public class SkystoneHardwareMap {
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
         foundationGrabber.setDirection(DcMotor.Direction.FORWARD);
         leftElevatorMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightElevatorMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightElevatorMotor.setDirection(DcMotor.Direction.FORWARD);
         leftElevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightElevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftElevatorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
