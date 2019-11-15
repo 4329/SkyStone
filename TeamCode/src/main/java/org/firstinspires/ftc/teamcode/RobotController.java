@@ -9,21 +9,24 @@ public class RobotController {
         this.robot = robot;
     }
 
-    public void foundationGrabberDown(){
+    public void foundationGrabberDown() {
         robot.rightOutFoundationGrabber.setPosition(0.7);
         robot.rightInFoundationGrabber.setPosition(0.3);
         robot.leftInFoundationGrabber.setPosition(0.65);
         robot.leftOutFoundationGrabber.setPosition(0.35);
-
-
     }
-    public void foundationGrabberUp(){
+
+    public void foundationGrabberUp() {
         robot.rightOutFoundationGrabber.setPosition(0);
         robot.rightInFoundationGrabber.setPosition(1.0);
         robot.leftInFoundationGrabber.setPosition(0);
         robot.leftOutFoundationGrabber.setPosition(1.0);
-
     }
 
-
+    public void foundationGrabberAlmostDown() {
+        robot.rightOutFoundationGrabber.setPosition(0.55);
+        robot.rightInFoundationGrabber.setPosition(0.45);
+        robot.leftInFoundationGrabber.setPosition(0.5);
+        robot.leftOutFoundationGrabber.setPosition(0.5);
+    }
 }

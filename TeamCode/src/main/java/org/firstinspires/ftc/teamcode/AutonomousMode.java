@@ -105,7 +105,7 @@ public abstract class AutonomousMode extends LinearOpMode {
         robotController.foundationGrabberDown();
         sleep(1000);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
-        turnToAngle(90, 1);
+        turnToAngle(colorDesiredAngle(), 1);
         robotController.foundationGrabberUp();
 
         encoderDrive(DRIVE_SPEED, -2, -2, 2);
@@ -187,9 +187,9 @@ public abstract class AutonomousMode extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
-    private void turnToAngle(double v, double speed) {
+    private void turnToAngle(double desiredAngle, double speed) {
         int numloops = 0;
-        double powermultiplier = 1;
+        double powermultiplier = colorDirection();
         double TURNTOANGLE_SPEED = speed;
 
         robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -199,9 +199,8 @@ public abstract class AutonomousMode extends LinearOpMode {
 
 
         while (opModeIsActive() &&
-                robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < v - 5) {
-
-
+                isNotDesiredAngle(robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle, desiredAngle)) {
+        // need to update while condition based on red or blue, method will switch less than with greater than for red. -Luca
             telemetry.addData("Numloops", numloops);
             telemetry.addData("Robot Turning", "Left");
             telemetry.addData("imu angle", robot.imu.getPosition());
@@ -222,6 +221,10 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
 
 
-        abstract int colorDirection();
+
+
+    abstract int colorDirection();
+        abstract int colorDesiredAngle();
+        abstract boolean isNotDesiredAngle(double firstAngle, double v);
 }
 

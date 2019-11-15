@@ -8,4 +8,12 @@ public class BlueAutonomousMode extends AutonomousMode {
     int colorDirection() {
         return 1;
     }
+
+    @Override
+    int colorDesiredAngle() {
+        return 85;
+    }
+     boolean isNotDesiredAngle(double firstAngle, double v) {
+        return firstAngle < v;
+    }
 }

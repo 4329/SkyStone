@@ -35,6 +35,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -88,6 +92,7 @@ public class Iterative_Drive_Mode extends OpMode {
             isPov = !isPov;
             telemetry.addData("pov mode ", isPov);
         }
+        telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
     }
 
     /*
@@ -176,6 +181,9 @@ public class Iterative_Drive_Mode extends OpMode {
         }
         if (gamepad2.y) {
             robotController.foundationGrabberUp();
+        }
+        if (gamepad2.right_bumper) {
+            robotController.foundationGrabberAlmostDown();
         }
 
         // Show the elapsed game time and wheel power.
