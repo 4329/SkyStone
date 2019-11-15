@@ -29,4 +29,13 @@ public class RobotController {
         robot.leftInFoundationGrabber.setPosition(0.5);
         robot.leftOutFoundationGrabber.setPosition(0.5);
     }
+    public void sgDeployUp() {
+        robot.rightSGDeploy.setPosition(0);
+        robot.leftSGDeploy.setPosition(1);
+    }
+
+    public void sgDeployDown() {
+        robot.rightSGDeploy.setPosition(0.5);
+        robot.leftSGDeploy.setPosition(0.5);
+    }
 }

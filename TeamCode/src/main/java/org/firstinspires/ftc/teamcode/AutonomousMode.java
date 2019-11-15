@@ -66,8 +66,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 public abstract class AutonomousMode extends LinearOpMode {
 
     /* Declare OpMode members. */
-    private SkystoneHardwareMap robot = new SkystoneHardwareMap();
-    private RobotController robotController = new RobotController(robot);
+    protected SkystoneHardwareMap robot = new SkystoneHardwareMap();
+    protected RobotController robotController = new RobotController(robot);
     private ElapsedTime     runtime = new ElapsedTime();
 
 

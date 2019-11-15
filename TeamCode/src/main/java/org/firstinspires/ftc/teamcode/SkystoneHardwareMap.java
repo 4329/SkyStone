@@ -20,6 +20,9 @@ public class SkystoneHardwareMap {
     public Servo rightOutFoundationGrabber;
     public Servo leftInFoundationGrabber;
     public Servo rightInFoundationGrabber;
+    public Servo leftSGDeploy;
+    public Servo rightSGDeploy;
+
 
     private RobotController robotController = new RobotController(this);
 
@@ -40,6 +43,9 @@ public class SkystoneHardwareMap {
         leftInFoundationGrabber = hardwareMap.get(Servo.class, "left_in_foundation_grabber");
         rightOutFoundationGrabber = hardwareMap.get(Servo.class, "right_out_foundation_grabber");
         rightInFoundationGrabber = hardwareMap.get(Servo.class, "right_in_foundation_grabber");
+
+        leftSGDeploy = hardwareMap.get(Servo.class, "left_SG_Deploy");
+        rightSGDeploy = hardwareMap.get(Servo.class, "right_SG_Deploy");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -68,5 +74,6 @@ public class SkystoneHardwareMap {
         imu.initialize(parameters);
 
         robotController.foundationGrabberUp();
+        robotController.sgDeployUp();
     }
 }

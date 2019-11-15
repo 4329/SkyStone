@@ -185,6 +185,9 @@ public class Iterative_Drive_Mode extends OpMode {
         if (gamepad2.right_bumper) {
             robotController.foundationGrabberAlmostDown();
         }
+        if (gamepad2.left_bumper) {
+            robotController.sgDeployDown();
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
