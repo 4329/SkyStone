@@ -35,7 +35,7 @@ public class RobotController {
     }
 
     public void sgDeployDown() {
-        robot.rightSGDeploy.setPosition(0.5);
-        robot.leftSGDeploy.setPosition(0.5);
+        robot.rightSGDeploy.setPosition(0.35);
+        robot.leftSGDeploy.setPosition(0.65);
     }
 }

@@ -185,7 +185,10 @@ public class Iterative_Drive_Mode extends OpMode {
         if (gamepad2.right_bumper) {
             robotController.foundationGrabberAlmostDown();
         }
-        if (gamepad2.left_bumper) {
+        if (gamepad2.dpad_up) {
+            robotController.sgDeployUp();
+        }
+        if (gamepad2.dpad_down) {
             robotController.sgDeployDown();
         }
 
