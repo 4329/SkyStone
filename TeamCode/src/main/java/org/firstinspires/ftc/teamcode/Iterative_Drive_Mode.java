@@ -53,7 +53,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Basic: Iterative OpMode", group = "Iterative Opmode")
+@TeleOp(name = "Tele Op Mode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
     public static final int CORE_HEX_90_DEGREES = 65;
     public static final double ELEVATOR_POWER = 0.425;
@@ -114,8 +114,9 @@ public class Iterative_Drive_Mode extends OpMode {
 
         if (gamepad1.start) {
             isPov = !isPov;
-            telemetry.addData("pov mode ", isPov);
         }
+
+        telemetry.addData("pov mode ", isPov);
 
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
@@ -134,6 +135,11 @@ public class Iterative_Drive_Mode extends OpMode {
             rightPower = -gamepad1.right_stick_y;
         }
 
+        if (gamepad1.right_bumper) {
+            leftPower = Math.pow(leftPower, 2);
+            rightPower = Math.pow(rightPower, 2);
+        }
+
         // Send calculated power to wheels
         robot.frontLeftDrive.setPower(leftPower);
         robot.frontRightDrive.setPower(rightPower);
@@ -141,10 +147,10 @@ public class Iterative_Drive_Mode extends OpMode {
         robot.backRightDrive.setPower(rightPower);
 
        if (gamepad2.a) {
-            robot.stoneGrabberServo.setPosition(0);
+            robotController.stoneGrabberDown();
         }
         if (gamepad2.b) {
-            robot.stoneGrabberServo.setPosition(0.5);
+            robotController.stoneGrabberUp();
         }
 
 //        if (gamepad2.x) {
