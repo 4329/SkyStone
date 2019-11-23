@@ -136,8 +136,18 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
         if (gamepad1.right_bumper) {
-            leftPower = Math.pow(leftPower, 2);
-            rightPower = Math.pow(rightPower, 2);
+            int leftMultiplier = 1;
+            if (leftPower < 0){
+                leftMultiplier = -1;
+            }
+            int rightMultiplier = 1;
+            if (rightPower < 0){
+                rightMultiplier = -1;
+            }
+            leftPower = Range.clip(leftPower, -0.99, 0.99);
+            rightPower = Range.clip(rightPower, -0.99, 0.99);
+            leftPower = Math.pow(leftPower, 2) * leftMultiplier;
+            rightPower = Math.pow(rightPower, 2) * rightMultiplier;
         }
 
         // Send calculated power to wheels
