@@ -35,8 +35,8 @@ public class RobotController {
     }
 
     public void sgDeployDown() {
-        robot.rightSGDeploy.setPosition(0.35);
-        robot.leftSGDeploy.setPosition(0.65);
+        robot.rightSGDeploy.setPosition(0.325);
+        robot.leftSGDeploy.setPosition(0.675);
     }
 
     public void stoneGrabberUp() {
