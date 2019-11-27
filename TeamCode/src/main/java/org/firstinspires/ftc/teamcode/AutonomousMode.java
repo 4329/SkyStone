@@ -80,6 +80,8 @@ public abstract class AutonomousMode extends LinearOpMode {
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 1.0;
+    static final double     LEFT                    = 1.0;
+    static final double     RIGHT                   =-1.0;
 
     @Override
     public void runOpMode() {
@@ -105,7 +107,7 @@ public abstract class AutonomousMode extends LinearOpMode {
         robotController.foundationGrabberDown();
         sleep(1000);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
-        turnToAngle(colorDesiredAngle(), 1);
+        turnToAngle(colorDesiredAngle(), 1, colorDirection());
         robotController.foundationGrabberUp();
 
         encoderDrive(DRIVE_SPEED, -2, -2, 2);
@@ -113,7 +115,19 @@ public abstract class AutonomousMode extends LinearOpMode {
         sleep(1000);
         encoderDrive(.8, 10, 10, 4);
         //this is the final back up
-        encoderDrive(DRIVE_SPEED, -45, -45, 5);
+        encoderDrive(DRIVE_SPEED, -6, -6, 5);
+        turnToAngle(colorDesiredAngle(), .3, colorDirection());
+        encoderDrive(DRIVE_SPEED, -39, -39, 5);
+        encoderDrive(DRIVE_SPEED, -16, -16, 5);
+        turnToAngle(0, .3, -colorDirection());
+        encoderDrive(DRIVE_SPEED, 6, 6, 5);
+        robotController.foundationGrabberDown();
+//        encoderDrive(DRIVE_SPEED, -6, -6, 5);
+//        turnToAngle(colorDesiredAngle(), .3, colorDirection());
+//        encoderDrive(DRIVE_SPEED, 30, 30, 5);
+//        robotController.foundationGrabberUp();
+//        encoderDrive(DRIVE_SPEED, -14, -14, 5);
+
 
 
 
@@ -187,9 +201,9 @@ public abstract class AutonomousMode extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
-    private void turnToAngle(double desiredAngle, double speed) {
+    private void turnToAngle(double desiredAngle, double speed, double direction) {
         int numloops = 0;
-        double powermultiplier = colorDirection();
+        double powermultiplier = direction;
         double TURNTOANGLE_SPEED = speed;
 
         robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
