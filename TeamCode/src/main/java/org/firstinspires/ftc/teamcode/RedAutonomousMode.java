@@ -13,7 +13,12 @@ public class RedAutonomousMode extends AutonomousMode {
     int colorDesiredAngle() {
         return -85;
     }
-    boolean isNotDesiredAngle(double firstAngle, double v) {
-        return firstAngle > v;
+    boolean isNotDesiredAngle(double firstAngle, double v, int direction) {
+        if (direction == 1) {
+            return firstAngle < v;
+        }
+        else {
+            return firstAngle > v;
+        }
     }
 }

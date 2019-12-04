@@ -116,10 +116,10 @@ public abstract class AutonomousMode extends LinearOpMode {
         encoderDrive(.8, 10, 10, 4);
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
-        turnToAngle(colorDesiredAngle(), .3, colorDirection());
+        turnToAngle(colorDesiredAngle(), .4, colorDirection());
         encoderDrive(DRIVE_SPEED, -39, -39, 5);
-        encoderDrive(DRIVE_SPEED, -16, -16, 5);
-        turnToAngle(0, .3, -colorDirection());
+        encoderDrive(DRIVE_SPEED, -22, -22, 5);
+        turnToAngle(0, .6, -colorDirection());
         encoderDrive(DRIVE_SPEED, 6, 6, 5);
         robotController.foundationGrabberDown();
 //        encoderDrive(DRIVE_SPEED, -6, -6, 5);
@@ -201,7 +201,7 @@ public abstract class AutonomousMode extends LinearOpMode {
             //  sleep(250);   // optional pause after each move
         }
     }
-    private void turnToAngle(double desiredAngle, double speed, double direction) {
+    private void turnToAngle(double desiredAngle, double speed, int direction) {
         int numloops = 0;
         double powermultiplier = direction;
         double TURNTOANGLE_SPEED = speed;
@@ -213,7 +213,7 @@ public abstract class AutonomousMode extends LinearOpMode {
 
 
         while (opModeIsActive() &&
-                isNotDesiredAngle(robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle, desiredAngle)) {
+                isNotDesiredAngle(robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle, desiredAngle, direction)) {
         // need to update while condition based on red or blue, method will switch less than with greater than for red. -Luca
             telemetry.addData("Numloops", numloops);
             telemetry.addData("Robot Turning", "Left");
@@ -239,6 +239,6 @@ public abstract class AutonomousMode extends LinearOpMode {
 
     abstract int colorDirection();
         abstract int colorDesiredAngle();
-        abstract boolean isNotDesiredAngle(double firstAngle, double v);
+        abstract boolean isNotDesiredAngle(double firstAngle, double v,int direction);
 }
 
