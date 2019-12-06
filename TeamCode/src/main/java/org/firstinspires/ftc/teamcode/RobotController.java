@@ -45,4 +45,13 @@ public class RobotController {
     public void stoneGrabberDown() {
         robot.stoneGrabberServo.setPosition(0);
     }
+
+
+    public void stoneGrabberSupportUp() {
+        robot.stoneGrabberSupport.setPosition(0.60);
+    }
+
+    public void stoneGrabberSupportDown() {
+        robot.stoneGrabberSupport.setPosition(1);
+    }
 }

@@ -113,17 +113,20 @@ public abstract class AutonomousMode extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, -2, -2, 2);
         //robotController.foundationGrabberDown();
         sleep(1000);
-        encoderDrive(.8, 10, 10, 4);
+        encoderDrive(1, 7, 7, 3);
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
-        turnToAngle(colorDesiredAngle(), .4, colorDirection());
+        //correct for being off either direction
+        turnToAngle(90*colorDirection(), .4, colorDirection());
+        turnToAngle(90*colorDirection(), .4, -colorDirection());
         encoderDrive(DRIVE_SPEED, -39, -39, 5);
         encoderDrive(DRIVE_SPEED, -22, -22, 5);
-        turnToAngle(0, .6, -colorDirection());
+        turnToAngle(5, .4, -colorDirection());
         encoderDrive(DRIVE_SPEED, 6, 6, 5);
         robotController.foundationGrabberDown();
-//        encoderDrive(DRIVE_SPEED, -6, -6, 5);
-//        turnToAngle(colorDesiredAngle(), .3, colorDirection());
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, -12, -12, 5);
+        turnToAngle(colorDesiredAngle(), .4, colorDirection());
 //        encoderDrive(DRIVE_SPEED, 30, 30, 5);
 //        robotController.foundationGrabberUp();
 //        encoderDrive(DRIVE_SPEED, -14, -14, 5);

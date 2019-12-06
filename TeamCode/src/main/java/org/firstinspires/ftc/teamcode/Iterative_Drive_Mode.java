@@ -163,12 +163,14 @@ public class Iterative_Drive_Mode extends OpMode {
             robotController.stoneGrabberUp();
         }
 
-//        if (gamepad2.x) {
-//            encoderGrabber(FOUNDATION_GRABBER_SPEED, CORE_HEX_90_DEGREES, 5);
-//        }
-//        if (gamepad2.y) {
-//            encoderGrabber(FOUNDATION_GRABBER_SPEED, -CORE_HEX_90_DEGREES, 5);
-//        }
+        if (gamepad2.dpad_left) {
+           robotController.stoneGrabberSupportUp();
+        }
+        if (gamepad2.dpad_right) {
+            robotController.stoneGrabberSupportDown();
+
+
+        }
 
     // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!
         if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 17) {

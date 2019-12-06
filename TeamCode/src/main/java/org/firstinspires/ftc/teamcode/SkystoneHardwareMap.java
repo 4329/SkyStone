@@ -22,6 +22,7 @@ public class SkystoneHardwareMap {
     public Servo rightInFoundationGrabber;
     public Servo leftSGDeploy;
     public Servo rightSGDeploy;
+    public Servo stoneGrabberSupport;
 
 
     private RobotController robotController = new RobotController(this);
@@ -43,6 +44,7 @@ public class SkystoneHardwareMap {
         leftInFoundationGrabber = hardwareMap.get(Servo.class, "left_in_foundation_grabber");
         rightOutFoundationGrabber = hardwareMap.get(Servo.class, "right_out_foundation_grabber");
         rightInFoundationGrabber = hardwareMap.get(Servo.class, "right_in_foundation_grabber");
+        stoneGrabberSupport = hardwareMap.get(Servo.class, "stone_grabber_support");
 
         leftSGDeploy = hardwareMap.get(Servo.class, "left_SG_Deploy");
         rightSGDeploy = hardwareMap.get(Servo.class, "right_SG_Deploy");
@@ -63,6 +65,7 @@ public class SkystoneHardwareMap {
         leftElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightElevatorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+
         //IMU parameters.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -76,5 +79,6 @@ public class SkystoneHardwareMap {
         robotController.foundationGrabberUp();
         robotController.sgDeployUp();
         robotController.stoneGrabberUp();
+        robotController.stoneGrabberSupportUp();
     }
 }
