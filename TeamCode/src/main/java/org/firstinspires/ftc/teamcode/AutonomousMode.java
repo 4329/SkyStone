@@ -105,31 +105,35 @@ public abstract class AutonomousMode extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 30, 30, 5);
         robotController.foundationGrabberDown();
-        sleep(1000);
+        sleep(750);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
         turnToAngle(colorDesiredAngle(), 1, colorDirection());
         robotController.foundationGrabberUp();
 
         encoderDrive(DRIVE_SPEED, -2, -2, 2);
         //robotController.foundationGrabberDown();
-        sleep(1000);
-        encoderDrive(1, 7, 7, 3);
+        sleep(750);
+        encoderDrive(1, 7, 7, 2);
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
         //correct for being off either direction
-        turnToAngle(90*colorDirection(), .4, colorDirection());
-        turnToAngle(90*colorDirection(), .4, -colorDirection());
-        encoderDrive(DRIVE_SPEED, -39, -39, 5);
-        encoderDrive(DRIVE_SPEED, -22, -22, 5);
+        if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle > 90*colorDirection()){
+            turnToAngle(90*colorDirection(), .3, -colorDirection());
+        }
+        else if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < 90*colorDirection()) {
+            turnToAngle(90 * colorDirection(), .3, colorDirection());
+        }
+        //encoderDrive(DRIVE_SPEED, -39, -39, 5); drives to the line from the foundation
+        encoderDrive(DRIVE_SPEED, -61, -61, 5);
         turnToAngle(5, .4, -colorDirection());
-        encoderDrive(DRIVE_SPEED, 6, 6, 5);
+        encoderDrive(DRIVE_SPEED, 10, 10, 5);
         robotController.foundationGrabberDown();
         sleep(500);
-        encoderDrive(DRIVE_SPEED, -12, -12, 5);
+        encoderDrive(DRIVE_SPEED, -10, -10, 5);
         turnToAngle(colorDesiredAngle(), .4, colorDirection());
-//        encoderDrive(DRIVE_SPEED, 30, 30, 5);
-//        robotController.foundationGrabberUp();
-//        encoderDrive(DRIVE_SPEED, -14, -14, 5);
+        encoderDrive(DRIVE_SPEED, 33, 33, 5);
+        robotController.foundationGrabberUp();
+        encoderDrive(DRIVE_SPEED, -14, -14, 5);
 
 
 
@@ -184,6 +188,8 @@ public abstract class AutonomousMode extends LinearOpMode {
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                         robot.frontLeftDrive.getCurrentPosition(),
                         robot.frontRightDrive.getCurrentPosition());
+                telemetry.addData("imu angle", robot.imu.getPosition());
+                telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
                 telemetry.update();
             }
 

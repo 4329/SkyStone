@@ -79,6 +79,6 @@ public class SkystoneHardwareMap {
         robotController.foundationGrabberUp();
         robotController.sgDeployUp();
         robotController.stoneGrabberUp();
-        robotController.stoneGrabberSupportUp();
+        robotController.stoneGrabberSupportInit();
     }
 }

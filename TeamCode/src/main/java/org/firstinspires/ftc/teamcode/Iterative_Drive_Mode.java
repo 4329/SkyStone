@@ -55,9 +55,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 @TeleOp(name = "Tele Op Mode", group = "Iterative Opmode")
 public class Iterative_Drive_Mode extends OpMode {
-    public static final int CORE_HEX_90_DEGREES = 65;
-    public static final double ELEVATOR_POWER = 0.425;
-    public static final double ELEVATOR_UP_POWER = 1;
+
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -101,6 +99,7 @@ public class Iterative_Drive_Mode extends OpMode {
     @Override
     public void start() {
         runtime.reset();
+        robotController.sgDeployDown();
     }
 
     /*
@@ -135,19 +134,11 @@ public class Iterative_Drive_Mode extends OpMode {
             rightPower = -gamepad1.right_stick_y;
         }
 
-        if (gamepad1.right_bumper) {
-            int leftMultiplier = 1;
-            if (leftPower < 0){
-                leftMultiplier = -1;
-            }
-            int rightMultiplier = 1;
-            if (rightPower < 0){
-                rightMultiplier = -1;
-            }
-            leftPower = Range.clip(leftPower, -0.99, 0.99);
-            rightPower = Range.clip(rightPower, -0.99, 0.99);
-            leftPower = Math.pow(leftPower, 2) * leftMultiplier;
-            rightPower = Math.pow(rightPower, 2) * rightMultiplier;
+        if (gamepad1.left_stick_button) {
+            leftPower = Range.clip(leftPower, -0.8, 0.8);
+            rightPower = Range.clip(rightPower, -0.8, 0.8);
+            leftPower = Math.copySign( Math.pow(leftPower, 3), leftPower) ;
+            rightPower = Math.copySign ( Math.pow(rightPower, 3),rightPower);
         }
 
         // Send calculated power to wheels
@@ -173,22 +164,22 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
     // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!
-        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 17) {
-            robot.leftElevatorMotor.setPower(ELEVATOR_UP_POWER);
+        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < RobotController.CORE_HEX_90_DEGREES * 17) {
+            robot.leftElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > 8) {//prevent going under zero
-            robot.leftElevatorMotor.setPower(-ELEVATOR_POWER);
+            robot.leftElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
         }
         else {
-            robot.leftElevatorMotor.setPower(0);
+                robot.leftElevatorMotor.setPower(0);
         }
 
 
-        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES * 17) {
-            robot.rightElevatorMotor.setPower(ELEVATOR_UP_POWER);
+        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < RobotController.CORE_HEX_90_DEGREES * 17) {
+            robot.rightElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > 8) {
-            robot.rightElevatorMotor.setPower(-ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
         }
         else {
             robot.rightElevatorMotor.setPower(0);
@@ -208,6 +199,9 @@ public class Iterative_Drive_Mode extends OpMode {
         }
         if (gamepad2.dpad_down) {
             robotController.sgDeployDown();
+        }
+        if (gamepad2.left_bumper) {
+            robotController.liftAndSupport();
         }
 
         // Show the elapsed game time and wheel power.
@@ -271,9 +265,5 @@ public class Iterative_Drive_Mode extends OpMode {
 
     }
 
-    public final void idle() {
-        // Otherwise, yield back our thread scheduling quantum and give other threads at
-        // our priority level a chance to run
-        Thread.yield();
-    }
+
 }
