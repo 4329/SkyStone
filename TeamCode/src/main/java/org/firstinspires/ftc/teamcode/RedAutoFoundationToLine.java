@@ -2,8 +2,21 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Red Autonomous Mode", group="Pushbot")
-public class RedAutonomousMode extends AutonomousMode {
+@Autonomous(name="Red Foundation To Line", group="Red")
+public class RedAutoFoundationToLine extends AutonomousMode {
+    @Override
+    public void runOpMode() {
+        initOpMode();
+
+        moveFoundationInBuildZone();
+        correctAngleAfterFoundation();
+        backFoundationToLine();
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(1000);
+    }
+
     @Override
     int colorDirection() {
         return -1;

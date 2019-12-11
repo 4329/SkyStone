@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BlueAutonomousModeTest {
-    private BlueAutonomousMode testObject = new BlueAutonomousMode();
+public class BlueAutoFoundationToLineTest {
+    private BlueAutoFoundationToLine testObject = new BlueAutoFoundationToLine();
 
 
     @Test

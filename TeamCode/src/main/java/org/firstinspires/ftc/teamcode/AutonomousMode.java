@@ -85,24 +85,63 @@ public abstract class AutonomousMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Ready to run");    //
-        telemetry.update();
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        initOpMode();
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
 
+        moveFoundationInBuildZone();
+        //correct for being off either direction
+        correctAngleAfterFoundation();
+//        backFoundationToLine();
+        foundationMoveStone();
 
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(1000);
+    }
+
+    protected void moveStoneAcrossLine() {
+        encoderDrive(DRIVE_SPEED, 25,25,5);
+        //try sleeping here
+        encoderDrive(0.5, 3.5,3.5,5);
+        robotController.foundationGrabberDown();
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, -20, -20, 5);
+        turnToAngle(colorDesiredAngle(), .4, colorDirection());
+        encoderDrive(DRIVE_SPEED, 36, 36, 5);
+        robotController.foundationGrabberUp();
+        encoderDrive(DRIVE_SPEED, -12, -12, 5);
+    }
+
+    protected void foundationMoveStone() {
+        encoderDrive(DRIVE_SPEED, -61, -61, 5);
+        turnToAngle(5, .4, -colorDirection());
+        encoderDrive(DRIVE_SPEED, 10, 10, 5);
+        robotController.foundationGrabberDown();
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, -10, -10, 5);
+        turnToAngle(colorDesiredAngle(), .4, colorDirection());
+        encoderDrive(DRIVE_SPEED, 33, 33, 5);
+        robotController.foundationGrabberUp();
+        encoderDrive(DRIVE_SPEED, -14, -14, 5);
+    }
+
+    protected void backFoundationToLine() {
+        encoderDrive(DRIVE_SPEED, -39, -39, 5);
+    }
+
+    protected void correctAngleAfterFoundation() {
+        if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle > 90*colorDirection()){
+            turnToAngle(90*colorDirection(), .3, -colorDirection());
+        }
+        else if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < 90*colorDirection()) {
+            turnToAngle(90 * colorDirection(), .3, colorDirection());
+        }
+    }
+
+    protected void moveFoundationInBuildZone() {
         encoderDrive(DRIVE_SPEED, 30, 30, 5);
         robotController.foundationGrabberDown();
         sleep(750);
@@ -116,31 +155,21 @@ public abstract class AutonomousMode extends LinearOpMode {
         encoderDrive(1, 7, 7, 2);
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
-        //correct for being off either direction
-        if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle > 90*colorDirection()){
-            turnToAngle(90*colorDirection(), .3, -colorDirection());
-        }
-        else if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < 90*colorDirection()) {
-            turnToAngle(90 * colorDirection(), .3, colorDirection());
-        }
-        //encoderDrive(DRIVE_SPEED, -39, -39, 5); drives to the line from the foundation
-        encoderDrive(DRIVE_SPEED, -61, -61, 5);
-        turnToAngle(5, .4, -colorDirection());
-        encoderDrive(DRIVE_SPEED, 10, 10, 5);
-        robotController.foundationGrabberDown();
-        sleep(500);
-        encoderDrive(DRIVE_SPEED, -10, -10, 5);
-        turnToAngle(colorDesiredAngle(), .4, colorDirection());
-        encoderDrive(DRIVE_SPEED, 33, 33, 5);
-        robotController.foundationGrabberUp();
-        encoderDrive(DRIVE_SPEED, -14, -14, 5);
+    }
 
+    protected void initOpMode() {
+        /*
+         * Initialize the drive system variables.
+         * The init() method of the hardware class does all the work here
+         */
+        robot.init(hardwareMap);
 
-
-
-        telemetry.addData("Path", "Complete");
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
-        sleep(1000);
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
     }
 
     public void encoderDrive(double speed,

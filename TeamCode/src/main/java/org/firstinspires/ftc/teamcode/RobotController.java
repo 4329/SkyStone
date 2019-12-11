@@ -4,6 +4,7 @@ public class RobotController {
     public static final int CORE_HEX_90_DEGREES = 65;
     public static final double ELEVATOR_POWER = 0.425;
     public static final double ELEVATOR_UP_POWER = 1;
+    private boolean isStoneGrabberSupportRetracted = true;
 
 
     private SkystoneHardwareMap robot;
@@ -38,7 +39,7 @@ public class RobotController {
     }
 
     public void sgDeployDown() {
-        stoneGrabberSupportUp();
+        stoneGrabberSupportRetracted();
         robot.rightSGDeploy.setPosition(0.325);
         robot.leftSGDeploy.setPosition(0.675);
     }
@@ -52,15 +53,18 @@ public class RobotController {
     }
 
 
-    public void stoneGrabberSupportUp() {
+    public void stoneGrabberSupportRetracted() {
         robot.stoneGrabberSupport.setPosition(0.71);
+        isStoneGrabberSupportRetracted = true;
     }
 
-    public void stoneGrabberSupportDown() {
+    public void stoneGrabberSupportDeployed() {
         robot.stoneGrabberSupport.setPosition(1);
+        isStoneGrabberSupportRetracted = false;
     }
     public void stoneGrabberSupportInit() {
         robot.stoneGrabberSupport.setPosition(0.6);
+        isStoneGrabberSupportRetracted = true;
     }
     public void liftBlock()  {
         robot.leftElevatorMotor.setPower(ELEVATOR_UP_POWER);
@@ -73,6 +77,12 @@ public class RobotController {
         robot.rightElevatorMotor.setPower(0);
 
     }
+    public int getElevatorMinimum(){
+        if (isStoneGrabberSupportRetracted){
+            return 8;
+        }
+        return CORE_HEX_90_DEGREES;
+    }
 
     public final void idle() {
         // Otherwise, yield back our thread scheduling quantum and give other threads at
@@ -81,7 +91,7 @@ public class RobotController {
     }
     public void liftAndSupport() {
         liftBlock();
-        stoneGrabberSupportDown();
+        stoneGrabberSupportDeployed();
     }
 
 }

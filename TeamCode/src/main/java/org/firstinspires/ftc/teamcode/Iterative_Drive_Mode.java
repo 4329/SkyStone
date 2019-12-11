@@ -57,6 +57,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 public class Iterative_Drive_Mode extends OpMode {
 
 
+    public static final int MAX_ELEVATOR_HEIGHT = RobotController.CORE_HEX_90_DEGREES * 17;
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private boolean isPov = true;
@@ -134,11 +135,11 @@ public class Iterative_Drive_Mode extends OpMode {
             rightPower = -gamepad1.right_stick_y;
         }
 
-        if (gamepad1.left_stick_button) {
+        if (gamepad1.right_bumper) {
             leftPower = Range.clip(leftPower, -0.8, 0.8);
             rightPower = Range.clip(rightPower, -0.8, 0.8);
-            leftPower = Math.copySign( Math.pow(leftPower, 3), leftPower) ;
-            rightPower = Math.copySign ( Math.pow(rightPower, 3),rightPower);
+            leftPower = Math.copySign( Math.pow(leftPower, 4), leftPower) ;
+            rightPower = Math.copySign ( Math.pow(rightPower, 4),rightPower);
         }
 
         // Send calculated power to wheels
@@ -155,19 +156,19 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
         if (gamepad2.dpad_left) {
-           robotController.stoneGrabberSupportUp();
+           robotController.stoneGrabberSupportRetracted();
         }
         if (gamepad2.dpad_right) {
-            robotController.stoneGrabberSupportDown();
+            robotController.stoneGrabberSupportDeployed();
 
 
         }
 
     // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!
-        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < RobotController.CORE_HEX_90_DEGREES * 17) {
+        if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < MAX_ELEVATOR_HEIGHT) {
             robot.leftElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
-        else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > 8) {//prevent going under zero
+        else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > robotController.getElevatorMinimum()) {//prevent going under zero
             robot.leftElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
         }
         else {
@@ -175,10 +176,10 @@ public class Iterative_Drive_Mode extends OpMode {
         }
 
 
-        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < RobotController.CORE_HEX_90_DEGREES * 17) {
+        if (gamepad2.left_stick_y < 0 && robot.rightElevatorMotor.getCurrentPosition() < MAX_ELEVATOR_HEIGHT) {
             robot.rightElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
-        else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > 8) {
+        else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > robotController.getElevatorMinimum()) {
             robot.rightElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
         }
         else {

@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RedAutonomousModeTest {
-    private RedAutonomousMode testObject = new RedAutonomousMode();
+public class RedAutoFoundationToLineTest {
+    private RedAutoFoundationToLine testObject = new RedAutoFoundationToLine();
 
 
     @Test
