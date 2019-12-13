@@ -103,13 +103,14 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
 
     protected void moveStoneAcrossLine() {
-        encoderDrive(DRIVE_SPEED, 25,25,5);
+        encoderDrive(0.5, 29.5,29.5,5);
         //try sleeping here
-        encoderDrive(0.5, 3.5,3.5,5);
+//        sleep(500);
+//        encoderDrive(0.5, 3.25,3.25,5);
         robotController.foundationGrabberDown();
         sleep(500);
         encoderDrive(DRIVE_SPEED, -20, -20, 5);
-        turnToAngle(colorDesiredAngle(), .4, colorDirection());
+        turnToAngle(colorDesiredAngle(), .5, colorDirection());
         encoderDrive(DRIVE_SPEED, 36, 36, 5);
         robotController.foundationGrabberUp();
         encoderDrive(DRIVE_SPEED, -12, -12, 5);
@@ -134,10 +135,10 @@ public abstract class AutonomousMode extends LinearOpMode {
 
     protected void correctAngleAfterFoundation() {
         if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle > 90*colorDirection()){
-            turnToAngle(90*colorDirection(), .3, -colorDirection());
+            turnToAngle(90*colorDirection(), .45, -colorDirection());
         }
         else if (robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle < 90*colorDirection()) {
-            turnToAngle(90 * colorDirection(), .3, colorDirection());
+            turnToAngle(90 * colorDirection(), .45, colorDirection());
         }
     }
 
