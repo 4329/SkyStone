@@ -143,7 +143,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
 
     protected void moveFoundationInBuildZone() {
-        encoderDrive(DRIVE_SPEED, 30, 30, 5);
+        encoderDrive(DRIVE_SPEED, 30.5, 30.5, 5);
         robotController.foundationGrabberDown();
         sleep(750);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
