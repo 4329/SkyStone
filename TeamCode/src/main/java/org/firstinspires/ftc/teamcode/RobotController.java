@@ -5,6 +5,7 @@ public class RobotController {
     public static final double ELEVATOR_POWER = 0.425;
     public static final double ELEVATOR_UP_POWER = 1;
     private boolean isStoneGrabberSupportRetracted = true;
+    public boolean isStoneGrabberUp = true;
 
 
     private SkystoneHardwareMap robot;
@@ -46,10 +47,14 @@ public class RobotController {
 
     public void stoneGrabberUp() {
         robot.stoneGrabberServo.setPosition(0.5);
+        sleep(250);
+        isStoneGrabberUp = true;
     }
-    public void stoneGrabberDown() {
 
+    public void stoneGrabberDown() {
         robot.stoneGrabberServo.setPosition(0);
+        sleep(250);
+        isStoneGrabberUp = false;
     }
 
 
@@ -70,7 +75,7 @@ public class RobotController {
         robot.leftElevatorMotor.setPower(ELEVATOR_UP_POWER);
         robot.rightElevatorMotor.setPower(ELEVATOR_UP_POWER);
 
-        while (robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES){
+        while (robot.leftElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES*2 && robot.rightElevatorMotor.getCurrentPosition() < CORE_HEX_90_DEGREES*2){
             idle();
         }
         robot.leftElevatorMotor.setPower(0);
@@ -94,4 +99,11 @@ public class RobotController {
         stoneGrabberSupportDeployed();
     }
 
+    public final void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

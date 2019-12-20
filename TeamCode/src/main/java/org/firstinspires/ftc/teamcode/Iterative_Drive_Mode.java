@@ -149,11 +149,16 @@ public class Iterative_Drive_Mode extends OpMode {
         robot.backRightDrive.setPower(rightPower);
 
        if (gamepad2.a) {
-            robotController.stoneGrabberDown();
+            if(robotController.isStoneGrabberUp) {
+                robotController.stoneGrabberDown();
+            }
+            else{
+                robotController.stoneGrabberUp();
+            }
         }
-        if (gamepad2.b) {
-            robotController.stoneGrabberUp();
-        }
+//        if (gamepad2.b) {
+//            robotController.stoneGrabberUp();
+//        }
 
         if (gamepad2.dpad_left) {
            robotController.stoneGrabberSupportRetracted();
