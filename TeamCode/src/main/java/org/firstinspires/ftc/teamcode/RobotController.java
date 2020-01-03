@@ -4,7 +4,8 @@ public class RobotController {
     public static final int CORE_HEX_90_DEGREES = 65;
     public static final double ELEVATOR_POWER = 0.425;
     public static final double ELEVATOR_UP_POWER = 1;
-    private boolean isStoneGrabberSupportRetracted = true;
+    public static final int CONTROLLER_DELAY = 200;
+    public boolean isStoneGrabberSupportRetracted = true;
     public boolean isStoneGrabberUp = true;
 
 
@@ -41,30 +42,32 @@ public class RobotController {
 
     public void sgDeployDown() {
         stoneGrabberSupportRetracted();
-        robot.rightSGDeploy.setPosition(0.325);
-        robot.leftSGDeploy.setPosition(0.675);
+        robot.rightSGDeploy.setPosition(0.335);
+        robot.leftSGDeploy.setPosition(0.665);
     }
 
     public void stoneGrabberUp() {
         robot.stoneGrabberServo.setPosition(0.5);
-        sleep(250);
+        sleep(CONTROLLER_DELAY);
         isStoneGrabberUp = true;
     }
 
     public void stoneGrabberDown() {
         robot.stoneGrabberServo.setPosition(0);
-        sleep(250);
+        sleep(CONTROLLER_DELAY);
         isStoneGrabberUp = false;
     }
 
 
     public void stoneGrabberSupportRetracted() {
         robot.stoneGrabberSupport.setPosition(0.71);
+        sleep(CONTROLLER_DELAY);
         isStoneGrabberSupportRetracted = true;
     }
 
     public void stoneGrabberSupportDeployed() {
         robot.stoneGrabberSupport.setPosition(1);
+        sleep(CONTROLLER_DELAY);
         isStoneGrabberSupportRetracted = false;
     }
     public void stoneGrabberSupportInit() {

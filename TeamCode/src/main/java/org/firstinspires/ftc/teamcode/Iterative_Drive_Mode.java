@@ -156,17 +156,13 @@ public class Iterative_Drive_Mode extends OpMode {
                 robotController.stoneGrabberUp();
             }
         }
-//        if (gamepad2.b) {
-//            robotController.stoneGrabberUp();
-//        }
-
-        if (gamepad2.dpad_left) {
-           robotController.stoneGrabberSupportRetracted();
-        }
-        if (gamepad2.dpad_right) {
-            robotController.stoneGrabberSupportDeployed();
-
-
+        if (gamepad2.b) {
+            if(robotController.isStoneGrabberSupportRetracted) {
+                robotController.stoneGrabberSupportDeployed();
+            }
+            else{
+                robotController.stoneGrabberSupportRetracted();
+            }
         }
 
     // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!

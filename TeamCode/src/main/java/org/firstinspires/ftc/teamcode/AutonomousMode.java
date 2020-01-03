@@ -29,14 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -78,7 +74,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     static final double     UNKNOWN_REDUCTION       = 3.0/5.0 ;
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION * UNKNOWN_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
+    static final double     DRIVE_SPEED             = 0.7;
     static final double     TURN_SPEED              = 1.0;
     static final double     LEFT                    = 1.0;
     static final double     RIGHT                   =-1.0;
@@ -143,7 +139,11 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
 
     protected void moveFoundationInBuildZone() {
-        encoderDrive(DRIVE_SPEED, 30.5, 30.5, 5);
+        encoderDrive(DRIVE_SPEED, 15, 15, 5);
+        turnToAngle(colorDesiredAngle(),.5,colorDirection());
+        encoderDrive(DRIVE_SPEED, 5,5, 5);
+        turnToAngle(0,.5,-colorDirection());
+        encoderDrive(DRIVE_SPEED, 15.5,15.5,5);
         robotController.foundationGrabberDown();
         sleep(750);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
@@ -157,6 +157,16 @@ public abstract class AutonomousMode extends LinearOpMode {
         //this is the final back up
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
     }
+    protected void returnToWall() {
+        turnToAngle(0,.5,-colorDirection());
+        encoderDrive(DRIVE_SPEED, -24,-24,2);
+    }
+    protected void driveToLine(int distance) {
+        encoderDrive(DRIVE_SPEED, distance, distance, 2);
+        turnToAngle(colorDesiredAngle(),.5,colorDirection());
+        backFoundationToLine();
+    }
+
 
     protected void initOpMode() {
         /*
