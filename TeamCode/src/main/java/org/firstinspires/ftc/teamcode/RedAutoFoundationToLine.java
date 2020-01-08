@@ -2,15 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Red Foundation To Line", group="Red")
+@Autonomous(name="Red Foundation To Line Wall", group="Red")
 public class RedAutoFoundationToLine extends AutonomousMode {
     @Override
     public void runOpMode() {
         initOpMode();
 
         moveFoundationInBuildZone();
-        correctAngleAfterFoundation();
-        backFoundationToLine();
+        returnToWall();
+        driveToLine(6);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
