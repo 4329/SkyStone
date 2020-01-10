@@ -24,8 +24,14 @@ public class RedAutoFoundationToLine extends AutonomousMode {
 
     @Override
     int colorDesiredAngle() {
-        return -85;
+        return -83;
     }
+
+    @Override
+    int zeroAngle() {
+        return -7;
+    }
+
     boolean isNotDesiredAngle(double firstAngle, double v, int direction) {
         if (direction == 1) {
             return firstAngle < v;

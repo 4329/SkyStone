@@ -140,10 +140,10 @@ public abstract class AutonomousMode extends LinearOpMode {
 
     protected void moveFoundationInBuildZone() {
         encoderDrive(DRIVE_SPEED, 15, 15, 5);
-        turnToAngle(colorDesiredAngle(),.5,colorDirection());
+        turnToAngle(colorDesiredAngle(),.6,colorDirection());
         encoderDrive(DRIVE_SPEED, 5,5, 5);
-        turnToAngle(0,.5,-colorDirection());
-        encoderDrive(DRIVE_SPEED, 15.5,15.5,5);
+        turnToAngle(zeroAngle(),.6,-colorDirection());
+        encoderDrive(DRIVE_SPEED, 13.5,13.7,5);
         robotController.foundationGrabberDown();
         sleep(750);
         encoderDrive(DRIVE_SPEED, -16, -16, 3);
@@ -158,7 +158,7 @@ public abstract class AutonomousMode extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, -6, -6, 5);
     }
     protected void returnToWall() {
-        turnToAngle(0,.5,-colorDirection());
+        turnToAngle(zeroAngle(),.6,-colorDirection());
         encoderDrive(DRIVE_SPEED, -24,-24,2);
     }
     protected void driveToLine(int distance) {
@@ -266,7 +266,6 @@ public abstract class AutonomousMode extends LinearOpMode {
         while (opModeIsActive() &&
                 isNotDesiredAngle(robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle, desiredAngle, direction)) {
         // need to update while condition based on red or blue, method will switch less than with greater than for red. -Luca
-            telemetry.addData("Numloops", numloops);
             telemetry.addData("Robot Turning", "Left");
             telemetry.addData("imu angle", robot.imu.getPosition());
             telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
@@ -290,6 +289,7 @@ public abstract class AutonomousMode extends LinearOpMode {
 
     abstract int colorDirection();
         abstract int colorDesiredAngle();
+        abstract int zeroAngle();
         abstract boolean isNotDesiredAngle(double firstAngle, double v,int direction);
 }
 

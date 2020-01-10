@@ -23,9 +23,15 @@ public class BlueAutoFoundationToLine extends AutonomousMode {
 
     @Override
     int colorDesiredAngle() {
-        return 85;
+        return 83;
     }
-     boolean isNotDesiredAngle(double firstAngle, double v, int direction) {
+
+    @Override
+    int zeroAngle() {
+        return 7;
+    }
+
+    boolean isNotDesiredAngle(double firstAngle, double v, int direction) {
          if (direction == 1) {
              return firstAngle < v;
          }
@@ -33,4 +39,5 @@ public class BlueAutoFoundationToLine extends AutonomousMode {
              return firstAngle > v;
          }
      }
+
 }

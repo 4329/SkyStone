@@ -12,7 +12,7 @@ public class RedAutoFoundationToLineSkybridge extends RedAutoFoundationToLine {
 
         moveFoundationInBuildZone();
         returnToWall();
-        driveToLine(29);
+        driveToLine(21);
 
 
         telemetry.addData("Path", "Complete");

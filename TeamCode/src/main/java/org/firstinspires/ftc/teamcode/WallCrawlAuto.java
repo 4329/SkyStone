@@ -14,6 +14,11 @@ public class WallCrawlAuto extends AutonomousMode {
         return 85;
     }
 
+    @Override
+    int zeroAngle() {
+        return 0;
+    }
+
     boolean isNotDesiredAngle(double firstAngle, double v, int direction) {
         return firstAngle < v;
     }
