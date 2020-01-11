@@ -42,8 +42,8 @@ public class RobotController {
 
     public void sgDeployDown() {
         stoneGrabberSupportRetracted();
-        robot.rightSGDeploy.setPosition(0.335);
-        robot.leftSGDeploy.setPosition(0.665);
+        robot.rightSGDeploy.setPosition(0.315);
+        robot.leftSGDeploy.setPosition(0.685);
     }
 
     public void stoneGrabberUp() {
