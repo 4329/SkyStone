@@ -42,9 +42,20 @@ public class RobotController {
 
     public void sgDeployDown() {
         stoneGrabberSupportRetracted();
-        robot.rightSGDeploy.setPosition(0.315);
-        robot.leftSGDeploy.setPosition(0.685);
+        robot.rightSGDeploy.setPosition(0.55);
+        robot.leftSGDeploy.setPosition(0.45);
     }
+
+    public void sgDeployInit() {
+        sgDeployUp();
+        stoneGrabberDown();
+        stoneGrabberSupportDeployed();
+    }
+
+//    public void sgDeployWayBack() {
+//        robot.rightSGDeploy.setPosition(0);
+//        robot.leftSGDeploy.setPosition(1);
+//    }
 
     public void stoneGrabberUp() {
         robot.stoneGrabberServo.setPosition(0.5);
@@ -109,4 +120,6 @@ public class RobotController {
             Thread.currentThread().interrupt();
         }
     }
+
+
 }

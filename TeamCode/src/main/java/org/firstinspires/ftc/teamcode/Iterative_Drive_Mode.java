@@ -100,7 +100,7 @@ public class Iterative_Drive_Mode extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-        robotController.sgDeployDown();
+        //robotController.sgDeployDown();
     }
 
     /*

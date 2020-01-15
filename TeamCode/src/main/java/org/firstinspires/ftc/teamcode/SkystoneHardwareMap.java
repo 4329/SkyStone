@@ -77,8 +77,10 @@ public class SkystoneHardwareMap {
         imu.initialize(parameters);
 
         robotController.foundationGrabberUp();
-        robotController.sgDeployUp();
-        robotController.stoneGrabberUp();
-        robotController.stoneGrabberSupportInit();
+//        robotController.sgDeployUp();
+//        robotController.stoneGrabberUp();
+//        robotController.stoneGrabberSupportInit();
+        robotController.sgDeployInit();
+
     }
 }
