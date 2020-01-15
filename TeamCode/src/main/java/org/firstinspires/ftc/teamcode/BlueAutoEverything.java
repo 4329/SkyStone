@@ -10,7 +10,7 @@ public class BlueAutoEverything extends BlueAutoFoundationToLine {
     public void runOpMode() {
         initOpMode();
 
-        moveFoundationInBuildZone();
+        moveFoundationInBuildZoneZigZag();
         correctAngleAfterFoundation();
         foundationMoveStone();
 

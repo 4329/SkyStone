@@ -86,7 +86,7 @@ public abstract class AutonomousMode extends LinearOpMode {
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
 
-        moveFoundationInBuildZone();
+        moveFoundationInBuildZoneZigZag();
         //correct for being off either direction
         correctAngleAfterFoundation();
 //        backFoundationToLine();
@@ -137,8 +137,22 @@ public abstract class AutonomousMode extends LinearOpMode {
             turnToAngle(90 * colorDirection(), .45, colorDirection());
         }
     }
-
     protected void moveFoundationInBuildZone() {
+        encoderDrive(DRIVE_SPEED, 30.5, 30.5, 5);
+        robotController.foundationGrabberDown();
+        sleep(750);
+        encoderDrive(DRIVE_SPEED, -16, -16, 5);
+        turnToAngle(colorDesiredAngle(), 1, colorDirection());
+        robotController.foundationGrabberUp();
+
+        encoderDrive(DRIVE_SPEED, -2, -2, 2);
+        //robotController.foundationGrabberDown();
+        sleep(750);
+        encoderDrive(1, 7, 7, 2);
+        //this is the final back up
+        encoderDrive(DRIVE_SPEED, -6, -6, 5);
+    }
+    protected void moveFoundationInBuildZoneZigZag() {
         encoderDrive(DRIVE_SPEED, 15, 15, 5);
         turnToAngle(colorDesiredAngle(),.6,colorDirection());
         encoderDrive(DRIVE_SPEED, 5,5, 5);

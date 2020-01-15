@@ -10,7 +10,7 @@ public class RedAutoEverything extends RedAutoFoundationToLine {
     public void runOpMode() {
         initOpMode();
 
-        moveFoundationInBuildZone();
+        moveFoundationInBuildZoneZigZag();
         correctAngleAfterFoundation();
         foundationMoveStone();
 
