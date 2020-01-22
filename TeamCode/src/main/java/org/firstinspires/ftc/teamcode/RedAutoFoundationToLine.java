@@ -40,4 +40,9 @@ public class RedAutoFoundationToLine extends AutonomousMode {
             return firstAngle > v;
         }
     }
+
+    @Override
+    int wallSmasher() {
+        return -75;
+    }
 }

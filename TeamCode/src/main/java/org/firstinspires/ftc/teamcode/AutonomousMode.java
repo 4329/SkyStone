@@ -126,7 +126,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
 
     protected void backFoundationToLine() {
-        encoderDrive(DRIVE_SPEED, -39, -39, 5);
+        encoderDrive(DRIVE_SPEED, -42, -42, 5);
     }
 
     protected void correctAngleAfterFoundation() {
@@ -177,7 +177,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
     protected void driveToLine(int distance) {
         encoderDrive(DRIVE_SPEED, distance, distance, 2);
-        turnToAngle(colorDesiredAngle(),.5,colorDirection());
+        turnToAngle(wallSmasher(),.5,colorDirection());
         backFoundationToLine();
     }
 
@@ -276,18 +276,19 @@ public abstract class AutonomousMode extends LinearOpMode {
         robot.backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.backRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        robot.frontLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
+        robot.backLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
+        robot.frontRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
+        robot.backRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
+
 
         while (opModeIsActive() &&
                 isNotDesiredAngle(robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle, desiredAngle, direction)) {
         // need to update while condition based on red or blue, method will switch less than with greater than for red. -Luca
-            telemetry.addData("Robot Turning", "Left");
-            telemetry.addData("imu angle", robot.imu.getPosition());
-            telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
-            robot.frontLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
-            robot.backLeftDrive.setPower(-TURNTOANGLE_SPEED * powermultiplier);
-            robot.frontRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
-            robot.backRightDrive.setPower(TURNTOANGLE_SPEED * powermultiplier);
-            telemetry.update();
+//            telemetry.addData("Robot Turning", "Left");
+//            telemetry.addData("imu angle", robot.imu.getPosition());
+//            telemetry.addData("imu angle_other", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+//            telemetry.update();
             idle();
         }
         robot.frontLeftDrive.setPower(0);
@@ -305,5 +306,6 @@ public abstract class AutonomousMode extends LinearOpMode {
         abstract int colorDesiredAngle();
         abstract int zeroAngle();
         abstract boolean isNotDesiredAngle(double firstAngle, double v,int direction);
+        abstract int wallSmasher();
 }
 

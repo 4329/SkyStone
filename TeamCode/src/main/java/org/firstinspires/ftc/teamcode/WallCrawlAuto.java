@@ -24,6 +24,11 @@ public class WallCrawlAuto extends AutonomousMode {
     }
 
     @Override
+    int wallSmasher() {
+        return 0;
+    }
+
+    @Override
     public void runOpMode() {
 
         /*

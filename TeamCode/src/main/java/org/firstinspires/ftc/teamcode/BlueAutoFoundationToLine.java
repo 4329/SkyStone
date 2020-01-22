@@ -40,4 +40,9 @@ public class BlueAutoFoundationToLine extends AutonomousMode {
          }
      }
 
+    @Override
+    int wallSmasher() {
+        return 75;
+    }
+
 }
