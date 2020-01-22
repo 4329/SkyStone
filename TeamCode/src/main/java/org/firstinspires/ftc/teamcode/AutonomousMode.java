@@ -78,6 +78,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     static final double     TURN_SPEED              = 1.0;
     static final double     LEFT                    = 1.0;
     static final double     RIGHT                   =-1.0;
+    static final double     SLOW_SPEED              = 0.3;
 
     @Override
     public void runOpMode() {
@@ -138,7 +139,8 @@ public abstract class AutonomousMode extends LinearOpMode {
         }
     }
     protected void moveFoundationInBuildZone() {
-        encoderDrive(DRIVE_SPEED, 30.5, 30.5, 5);
+        encoderDrive(DRIVE_SPEED, 24, 24, 5);
+        encoderDrive(SLOW_SPEED, 6.5, 6.5, 5);
         robotController.foundationGrabberDown();
         sleep(750);
         encoderDrive(DRIVE_SPEED, -16, -16, 5);
@@ -200,19 +202,20 @@ public abstract class AutonomousMode extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
+
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.frontLeftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.frontRightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.frontLeftDrive.setTargetPosition(newLeftTarget);
-            robot.frontRightDrive.setTargetPosition(newRightTarget);
-            robot.backLeftDrive.setTargetPosition(newLeftTarget);
-            robot.backRightDrive.setTargetPosition(newRightTarget);
+            int newLeftBackTarget = robot.backLeftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            int newRightBackTarget = robot.backRightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            int newLeftFrontTarget = robot.frontLeftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            int newRightFrontTarget = robot.frontRightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            robot.frontLeftDrive.setTargetPosition(newLeftFrontTarget);
+            robot.frontRightDrive.setTargetPosition(newRightFrontTarget);
+            robot.backLeftDrive.setTargetPosition(newLeftBackTarget);
+            robot.backRightDrive.setTargetPosition(newRightBackTarget);
 
             // Turn On RUN_TO_POSITION
             robot.frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -238,7 +241,7 @@ public abstract class AutonomousMode extends LinearOpMode {
                     (robot.frontLeftDrive.isBusy() || robot.frontRightDrive.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftFrontTarget,  newRightFrontTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                         robot.frontLeftDrive.getCurrentPosition(),
                         robot.frontRightDrive.getCurrentPosition());
