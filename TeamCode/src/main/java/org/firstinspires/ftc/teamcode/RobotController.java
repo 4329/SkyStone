@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class RobotController {
     public static final int CORE_HEX_90_DEGREES = 65;
-    public static final double ELEVATOR_POWER = 0.425;
+    public static final double ELEVATOR_DOWN_POWER = -0.425;
     public static final double ELEVATOR_UP_POWER = 1;
     public static final int CONTROLLER_DELAY = 200;
     public boolean isStoneGrabberSupportRetracted = true;
@@ -113,6 +113,18 @@ public class RobotController {
         stoneGrabberSupportDeployed();
     }
 
+    public void elevatorDown() {
+        robot.leftElevatorMotor.setPower(ELEVATOR_DOWN_POWER);
+        robot.rightElevatorMotor.setPower(ELEVATOR_DOWN_POWER);
+
+        while (robot.rightElevatorMotor.getCurrentPosition() > getElevatorMinimum()){
+            idle();
+        }
+        robot.leftElevatorMotor.setPower(0);
+        robot.rightElevatorMotor.setPower(0);
+    }
+
+
     public final void sleep(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
@@ -122,4 +134,9 @@ public class RobotController {
     }
 
 
+    public void liftAndUnsupport() {
+        liftBlock();
+        stoneGrabberSupportRetracted();
+
+    }
 }

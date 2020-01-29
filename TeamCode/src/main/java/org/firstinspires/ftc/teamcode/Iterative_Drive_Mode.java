@@ -170,7 +170,7 @@ public class Iterative_Drive_Mode extends OpMode {
             robot.leftElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.leftElevatorMotor.getCurrentPosition() > robotController.getElevatorMinimum()) {//prevent going under zero
-            robot.leftElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
+            robot.leftElevatorMotor.setPower(RobotController.ELEVATOR_DOWN_POWER);
         }
         else {
                 robot.leftElevatorMotor.setPower(0);
@@ -181,7 +181,7 @@ public class Iterative_Drive_Mode extends OpMode {
             robot.rightElevatorMotor.setPower(RobotController.ELEVATOR_UP_POWER);
         }
         else if (gamepad2.left_stick_y > 0 && robot.rightElevatorMotor.getCurrentPosition() > robotController.getElevatorMinimum()) {
-            robot.rightElevatorMotor.setPower(-RobotController.ELEVATOR_POWER);
+            robot.rightElevatorMotor.setPower(RobotController.ELEVATOR_DOWN_POWER);
         }
         else {
             robot.rightElevatorMotor.setPower(0);
