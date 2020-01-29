@@ -10,7 +10,7 @@ public class RedAutoFoundationToLine extends AutonomousMode {
 
         moveFoundationInBuildZone();
         returnToWall();
-        driveToLine(6);
+        driveToLineWall(6);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

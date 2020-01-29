@@ -177,12 +177,16 @@ public abstract class AutonomousMode extends LinearOpMode {
         turnToAngle(zeroAngle(),.6,-colorDirection());
         encoderDrive(DRIVE_SPEED, -24,-24,2);
     }
-    protected void driveToLine(int distance) {
+    protected void driveToLineWall(int distance) {
         encoderDrive(DRIVE_SPEED, distance, distance, 2);
         turnToAngle(wallSmasher(),.5,colorDirection());
         backFoundationToLine();
     }
-
+    protected void driveToLineSkybridge(int distance) {
+        encoderDrive(DRIVE_SPEED, distance, distance, 2);
+        turnToAngle(colorDesiredAngle(),.5,colorDirection());
+        backFoundationToLine();
+    }
 
     protected void initOpMode() {
         /*
