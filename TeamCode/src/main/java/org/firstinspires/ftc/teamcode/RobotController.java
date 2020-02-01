@@ -6,7 +6,7 @@ public class RobotController {
     public static final double ELEVATOR_UP_POWER = 1;
     public static final int CONTROLLER_DELAY = 200;
     public boolean isStoneGrabberSupportRetracted = true;
-    public boolean isStoneGrabberUp = true;
+    public boolean isStoneGrabberUp = false;
 
 
     private SkystoneHardwareMap robot;
