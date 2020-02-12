@@ -2,14 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Blue Stone Across Line", group="Blue")
-public class BlueAutoStoneAcrossLine extends BlueAutoFoundationToLine {
+@Autonomous(name="Red Stone Across Line Skybridge", group="Red")
+public class RedAutoStoneAcrossLineSkybridge extends RedAutoFoundationToLine {
     @Override
     public void runOpMode() {
         initOpMode();
-        moveStoneAcrossLine();
+        pickupStoneFromStart();
+        moveStoneAcrossLineSkybridge();
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
-        sleep(1000);
     }
 }

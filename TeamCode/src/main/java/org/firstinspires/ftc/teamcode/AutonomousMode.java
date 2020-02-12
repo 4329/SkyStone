@@ -99,21 +99,35 @@ public abstract class AutonomousMode extends LinearOpMode {
         sleep(1000);
     }
 
-    protected void moveStoneAcrossLine() {
+    protected void pickupStoneFromStart() {
         robotController.sgDeployDown();
+        robotController.stoneGrabberUp();
         encoderDrive(DRIVE_SPEED, 20,20,5);
-        encoderDrive(SLOW_SPEED, 6.5,6.5,5);
+        encoderDrive(SLOW_SPEED, 9.5,9.5,5);
         sleep(500);
         robotController.stoneGrabberDown();
         robotController.liftAndSupport();
         robotController.elevatorDown();
-        encoderDrive(DRIVE_SPEED, -20, -20, 5);
+    }
+
+    protected void moveStoneAcrossLineSkybridge() {
+        encoderDrive(DRIVE_SPEED, -5, -5, 5);
         turnToAngle(colorDesiredAngle(), .5, colorDirection());
-        encoderDrive(DRIVE_SPEED, 36, 36, 5);
+        encoderDrive(DRIVE_SPEED, 40, 40, 5);
         robotController.liftAndUnsupport();
         robotController.elevatorDown();
         robotController.stoneGrabberUp();
-        encoderDrive(DRIVE_SPEED, -15, -15, 5);
+        encoderDrive(DRIVE_SPEED, -20, -20, 5);
+    }
+
+    protected void moveStoneAcrossLineWall() {
+        encoderDrive(DRIVE_SPEED, -26, -26, 5);
+        turnToAngle(colorDesiredAngle(), .5, colorDirection());
+        encoderDrive(DRIVE_SPEED, 40, 40, 5);
+        robotController.liftAndUnsupport();
+        robotController.elevatorDown();
+        robotController.stoneGrabberUp();
+        encoderDrive(DRIVE_SPEED, -20, -20, 5);
     }
 
     protected void foundationMoveStone() {
