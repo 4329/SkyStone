@@ -16,8 +16,8 @@ public class RobotController {
     }
 
     public void foundationGrabberDown() {
-        robot.rightOutFoundationGrabber.setPosition(0.7);
-        robot.rightInFoundationGrabber.setPosition(0.3);
+        robot.rightOutFoundationGrabber.setPosition(0.65);
+        robot.rightInFoundationGrabber.setPosition(0.35);
         robot.leftInFoundationGrabber.setPosition(0.65);
         robot.leftOutFoundationGrabber.setPosition(0.35);
     }
