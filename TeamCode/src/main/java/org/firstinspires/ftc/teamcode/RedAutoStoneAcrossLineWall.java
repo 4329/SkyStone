@@ -9,6 +9,7 @@ public class RedAutoStoneAcrossLineWall extends RedAutoFoundationToLine {
         initOpMode();
         pickupStoneFromStart();
         moveStoneAcrossLineWall();
+        moveSecoundStoneAcrossLine(26);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

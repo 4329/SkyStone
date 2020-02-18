@@ -9,6 +9,7 @@ public class BlueAutoStoneAcrossLineWall extends BlueAutoFoundationToLine {
         initOpMode();
         pickupStoneFromStart();
         moveStoneAcrossLineWall();
+        moveSecoundStoneAcrossLine(26);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

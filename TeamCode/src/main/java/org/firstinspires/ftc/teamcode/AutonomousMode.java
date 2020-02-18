@@ -128,7 +128,7 @@ public abstract class AutonomousMode extends LinearOpMode {
         robotController.stoneGrabberDown();
         robotController.liftAndSupport();
         robotController.elevatorDown();
-        encoderDrive(DRIVE_SPEED, -distanceToStone, -distanceToStone,3);
+        encoderDrive(DRIVE_SPEED, -distanceToStone-1, -distanceToStone-1,3);
         turnToAngle(colorDesiredAngle(),.5, colorDirection());
         encoderDrive(DRIVE_SPEED, 48, 48, 5);
         robotController.liftAndUnsupport();

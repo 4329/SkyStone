@@ -9,6 +9,7 @@ public class RedAutoStoneAcrossLineSkybridge extends RedAutoFoundationToLine {
         initOpMode();
         pickupStoneFromStart();
         moveStoneAcrossLineSkybridge();
+        moveSecoundStoneAcrossLine(5);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
