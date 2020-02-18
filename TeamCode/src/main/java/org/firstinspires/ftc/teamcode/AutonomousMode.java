@@ -212,7 +212,7 @@ public abstract class AutonomousMode extends LinearOpMode {
     }
     protected void returnToWall() {
         turnToAngle(zeroAngle(),.6,-colorDirection());
-        encoderDrive(DRIVE_SPEED, -24,-24,2);
+        encoderDrive(DRIVE_SPEED, -20,-20,2);
     }
     protected void driveToLineWall(int distance) {
         encoderDrive(DRIVE_SPEED, distance, distance, 2);

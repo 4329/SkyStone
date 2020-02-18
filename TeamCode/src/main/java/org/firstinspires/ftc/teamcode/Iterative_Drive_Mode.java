@@ -164,6 +164,30 @@ public class Iterative_Drive_Mode extends OpMode {
                 robotController.stoneGrabberSupportRetracted();
             }
         }
+        if (gamepad2.left_trigger > .8 && robotController.isLeftTriggerDown == false) {
+            if (robotController.isLeftFoundationGrabberUp) {
+                robotController.leftFoundationGrabberDown();
+            }
+            else {
+                robotController.leftFoundationGrabberUp();
+            }
+            robotController.isLeftTriggerDown = true;
+        }
+        if (robotController.isLeftTriggerDown && gamepad2.left_trigger < .2) {
+            robotController.isLeftTriggerDown = false;
+        }
+        if (gamepad2.right_trigger > .8 && robotController.isRightTriggerDown == false) {
+            if (robotController.isRightFoundationGrabberUp) {
+                robotController.rightFoundationGrabberDown();
+            }
+            else {
+                robotController.rightFoundationGrabberUp();
+            }
+            robotController.isRightTriggerDown = true;
+        }
+        if (robotController.isRightTriggerDown && gamepad2.right_trigger < .2) {
+            robotController.isRightTriggerDown = false;
+        }
 
     // STICK DIRECTIONS ARE NEGATIVE!!!!!!!!
         if (gamepad2.left_stick_y < 0 && robot.leftElevatorMotor.getCurrentPosition() < MAX_ELEVATOR_HEIGHT) {

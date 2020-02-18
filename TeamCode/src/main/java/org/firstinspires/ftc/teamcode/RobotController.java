@@ -7,6 +7,10 @@ public class RobotController {
     public static final int CONTROLLER_DELAY = 200;
     public boolean isStoneGrabberSupportRetracted = true;
     public boolean isStoneGrabberUp = false;
+    public boolean isLeftFoundationGrabberUp = true;
+    public boolean isRightFoundationGrabberUp = true;
+    public boolean isLeftTriggerDown = false;
+    public boolean isRightTriggerDown = false;
 
 
     private SkystoneHardwareMap robot;
@@ -20,6 +24,8 @@ public class RobotController {
         robot.rightInFoundationGrabber.setPosition(0.35);
         robot.leftInFoundationGrabber.setPosition(0.65);
         robot.leftOutFoundationGrabber.setPosition(0.35);
+        isLeftFoundationGrabberUp = false;
+        isRightFoundationGrabberUp = false;
     }
 
     public void foundationGrabberUp() {
@@ -27,6 +33,8 @@ public class RobotController {
         robot.rightInFoundationGrabber.setPosition(1.0);
         robot.leftInFoundationGrabber.setPosition(0);
         robot.leftOutFoundationGrabber.setPosition(1.0);
+        isLeftFoundationGrabberUp = true;
+        isRightFoundationGrabberUp = true;
     }
 
     public void foundationGrabberAlmostDown() {
@@ -34,7 +42,34 @@ public class RobotController {
         robot.rightInFoundationGrabber.setPosition(0.45);
         robot.leftInFoundationGrabber.setPosition(0.5);
         robot.leftOutFoundationGrabber.setPosition(0.5);
+        isLeftFoundationGrabberUp = false;
+        isRightFoundationGrabberUp = false;
     }
+
+    public void leftFoundationGrabberUp(){
+        robot.leftInFoundationGrabber.setPosition(0);
+        robot.leftOutFoundationGrabber.setPosition(1.0);
+        isLeftFoundationGrabberUp = true;
+    }
+
+    public void rightFoundationGrabberUp() {
+        robot.rightOutFoundationGrabber.setPosition(0);
+        robot.rightInFoundationGrabber.setPosition(1.0);
+        isRightFoundationGrabberUp = true;
+    }
+
+    public void leftFoundationGrabberDown(){
+        robot.leftInFoundationGrabber.setPosition(0.65);
+        robot.leftOutFoundationGrabber.setPosition(0.35);
+        isLeftFoundationGrabberUp = false;
+    }
+
+    public void rightFoundationGrabberDown(){
+        robot.rightOutFoundationGrabber.setPosition(0.65);
+        robot.rightInFoundationGrabber.setPosition(0.35);
+        isRightFoundationGrabberUp = false;
+    }
+
     public void sgDeployUp() {
         robot.rightSGDeploy.setPosition(0);
         robot.leftSGDeploy.setPosition(1);
