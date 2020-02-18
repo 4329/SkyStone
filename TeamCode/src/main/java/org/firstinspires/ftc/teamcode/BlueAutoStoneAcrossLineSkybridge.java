@@ -9,9 +9,11 @@ public class BlueAutoStoneAcrossLineSkybridge extends BlueAutoFoundationToLine {
         initOpMode();
         pickupStoneFromStart();
         moveStoneAcrossLineSkybridge();
+        moveSecoundStoneAcrossLine(5);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
+
     }
 }

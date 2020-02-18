@@ -37,6 +37,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+import java.sql.Driver;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -117,6 +119,25 @@ public abstract class AutonomousMode extends LinearOpMode {
         robotController.liftAndUnsupport();
         robotController.elevatorDown();
         robotController.stoneGrabberUp();
+    }
+
+    protected void moveSecoundStoneAcrossLine(double distanceToStone){
+        encoderDrive(DRIVE_SPEED,-48,-48,5);
+        turnToAngle(zeroAngle(),.5,-colorDirection());
+        encoderDrive(DRIVE_SPEED, distanceToStone, distanceToStone,3);
+        robotController.stoneGrabberDown();
+        robotController.liftAndSupport();
+        robotController.elevatorDown();
+        encoderDrive(DRIVE_SPEED, -distanceToStone, -distanceToStone,3);
+        turnToAngle(colorDesiredAngle(),.5, colorDirection());
+        encoderDrive(DRIVE_SPEED, 48, 48, 5);
+        robotController.liftAndUnsupport();
+        robotController.elevatorDown();
+        robotController.stoneGrabberUp();
+        driveBackToLine();
+    }
+
+    protected void driveBackToLine() {
         encoderDrive(DRIVE_SPEED, -20, -20, 5);
     }
 
@@ -127,7 +148,6 @@ public abstract class AutonomousMode extends LinearOpMode {
         robotController.liftAndUnsupport();
         robotController.elevatorDown();
         robotController.stoneGrabberUp();
-        encoderDrive(DRIVE_SPEED, -20, -20, 5);
     }
 
     protected void foundationMoveStone() {
